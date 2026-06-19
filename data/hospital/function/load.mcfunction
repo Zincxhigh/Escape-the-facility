@@ -18,6 +18,9 @@ scoreboard players add #total hacked_computers 0
 scoreboard players set #total hacked_computers 0
 scoreboard objectives add ability_cooldown dummy
 scoreboard players set @s ability_cooldown 0
+scoreboard objectives add ability_cooldown2 dummy
+scoreboard players set @s ability_cooldown2 0
+
 
 setblock 16 -2 24 minecraft:bamboo_door[half=lower,open=false,facing=east,hinge=left] replace
 setblock 16 -1 24 minecraft:bamboo_door[half=upper,open=false,facing=east,hinge=left] replace
@@ -77,8 +80,8 @@ give @a[tag=is_monster] minecraft:leather_leggings[minecraft:dyed_color=0]
 give @a[tag=is_monster] minecraft:leather_boots[minecraft:dyed_color=0]
 give @a[tag=is_monster] minecraft:player_head[minecraft:custom_name='{"text":"Elder Mimic","color":"gold","underlined":true,"bold":true,"italic":false}',minecraft:lore=['{"text":"Custom Head ID: 111717","color":"gray","italic":false}','{"text":"www.minecraft-heads.com","color":"blue","italic":false}'],minecraft:profile={properties:[{name:"textures",value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2U1Nzk2ZmI3MmI2OGUzNmQ0YmZmYjM2MThkNzNiZDNlODk3NTU4MjdkNGE4NjZmZDhhNGFkYTIzOTc3OWExNCJ9fX0="}]}] 1
 give @a[tag=is_monster] minecraft:netherite_sword
-give @a[tag=is_monster] minecraft:potion[minecraft:potion_contents={custom_effects:[{id:"minecraft:invisibility",amplifier:1,duration:1000,show_particles:0b}]}] 2
-give @a[tag=is_monster] recovery_compass[custom_data={ability:1},item_name='"[Monster Radar Key]"'] 1
+give @a[tag=is_monster] potion[custom_data={ability:2},item_name='"[Invisibility potion]"'] 1
+give @a[tag=is_monster] recovery_compass[custom_data={ability:1},item_name='"[Radar Key]"'] 1
 
 effect clear @a[team=monster] minecraft:invisibility 
 effect clear @a[team=monster] minecraft:glowing

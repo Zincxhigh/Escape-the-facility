@@ -69,7 +69,7 @@ title @a[tag=downed] actionbar ["",{"text":"Bleed Out: ","color":"red"},{"score"
 # Success Check of revive
 execute as @a[tag=downed,scores={revive_progress=60..}] run function hospital:revive_success
 
-# so nobody can ,pve
+# so nobody can ,pvp
 execute as @a[tag=downed,tag=!placed_marker] at @s run summon marker ~ ~ ~ {Tags:["death_point"]}
 execute as @a[tag=downed,tag=!placed_marker] run tag @s add placed_marker
 execute as @a[tag=downed] at @s run tp @s @e[tag=death_point,limit=1,sort=nearest]
@@ -215,7 +215,7 @@ execute as @a[scores={hacking_timer=0}] run bossbar set hacking_progress visible
 
 execute as @a[x=17,y=-2,z=24,dx=2,dy=2,dz=2] if score #total hacked_computers matches 4.. run title @s title {"text":"YOU ESCAPED YOUR FATE","color":"gold","bold":true}
 
-execute if entity @a[team=monster] unless entity @a[team=survivors] run title @a[team=monster] title {"text":"YOU GOT YOUR REVENGE","color":"red","bold":true}
+#execute if entity @a[team=monster] unless entity @a[team=survivors] run title @a[team=monster] title {"text":"YOU GOT YOUR REVENGE","color":"red","bold":true}
 
 execute if entity @a[team=monster] unless entity @a[team=survivors] run playsound minecraft:entity.wither.death master @a[team=monster]
 
@@ -242,23 +242,31 @@ setblock -46 -2 3 minecraft:chest{Items:[{Slot:0b,id:"minecraft:oak_button",coun
 setblock -39 5 -40 minecraft:chest{Items:[{Slot:0b,id:"minecraft:oak_button",count:1,components:{"minecraft:can_place_on":{blocks:["spruce_planks","spruce_log","spruce_wood","stripped_spruce_log","stripped_spruce_wood"]}}}]}
 
 #for finding players thro glowing effect
+
 execute as @a[tag=is_monster,scores={ability_cooldown=0}] if items entity @s weapon.offhand *[custom_data~{ability:1}] run function hospital:use_ability
+#for invisibilty of monster
 
-#vissual cooldown timer for the monster's ability
+execute as @a[tag=is_monster,scores={ability_cooldown2=0}] if items entity @s weapon.offhand *[custom_data~{ability:2}] run function hospital:use_ability2
+
+
 execute as @a[scores={ability_cooldown=1..}] run scoreboard players remove @s ability_cooldown 1
-execute as @a[tag=is_monster,scores={ability_cooldown=0}] run title @s actionbar {"text":"[G] RADAR ABILITY: READY","color":"green","bold":true}
+execute as @a[scores={ability_cooldown2=1..}] run scoreboard players remove @s ability_cooldown2 1
+
+
 execute as @a[tag=is_monster,scores={ability_cooldown=241..300}] run title @s actionbar {"text":"[G] RADAR ACTIVE!","color":"red","bold":true}
-execute as @a[tag=is_monster,scores={ability_cooldown=1..240}] run title @s actionbar ["",{"text":"[G] RADAR COOLDOWN: ","color":"gray"},{"score":{"name":"@s","objective":"ability_cooldown"},"color":"gold"}]
+
+execute as @a[tag=is_monster,scores={ability_cooldown2=941..1000}] run title @s actionbar {"text":"[F] INVISIBILITY ACTIVE!","color":"red","bold":true}
+
+execute as @a[tag=is_monster,scores={ability_cooldown=0}] if items entity @s weapon *[custom_data~{ability:1}] run title @s actionbar {"text":"[G] RADAR ABILITY: READY","color":"green","bold":true}
+
+execute as @a[tag=is_monster,scores={ability_cooldown=1..240}] if items entity @s weapon *[custom_data~{ability:1}] run title @s actionbar ["",{"text":"[G] RADAR COOLDOWN: ","color":"gray"},{"score":{"name":"@s","objective":"ability_cooldown"},"color":"gold"}]
+
+execute as @a[tag=is_monster,scores={ability_cooldown2=0}] if items entity @s weapon *[custom_data~{ability:2}] run title @s actionbar {"text":"[F] INVISIBILITY ABILITY: READY","color":"green","bold":true}
 
 
+execute as @a[tag=is_monster,scores={ability_cooldown2=1..940}] if items entity @s weapon *[custom_data~{ability:2}] run title @s actionbar ["",{"text":"[F] INVISIBILITY COOLDOWN: ","color":"gray"},{"score":{"name":"@s","objective":"ability_cooldown2"},"color":"gold"}]
 
-
-
-
-
-
-
-
+execute as @a[tag=is_monster,scores={ability_cooldown=..240,ability_cooldown2=..940}] unless items entity @s weapon *[custom_data~{ability:1}] unless items entity @s weapon *[custom_data~{ability:2}] run title @s actionbar ""
 
 
 
