@@ -1,3 +1,5 @@
+scoreboard players enable @a start_game
+scoreboard players enable @a end_game
 scoreboard players enable @a skip_intro
 execute as @a[scores={skip_intro=1..}] run scoreboard players set @s intro_timer 1200
 execute as @a[scores={skip_intro=1..}] run scoreboard players set @s skip_intro 0
@@ -131,15 +133,19 @@ execute as @a[scores={intro_timer=1}] run tellraw @s {"text":"[ CLICK TO SKIP ]"
 execute as @a[scores={intro_timer=1},tag=is_monster] run title @s times 20 100 20
 execute as @a[scores={intro_timer=1},tag=is_monster] run title @s title {"text":"You are Kevin", "bold":true, "color":"dark_red"}
 execute as @a[scores={intro_timer=1},tag=is_monster] run title @s actionbar {"text":"I WILL PLAY WITH ALL OF YOU WHO PLAYED WITH ME", "color":"red"}
+playsound minecraft:entity.lightning_bolt.impact master @a ~ ~ ~ 1 0.1
 execute as @a[scores={intro_timer=1},tag=tank] run title @s times 20 100 20
 execute as @a[scores={intro_timer=1},tag=tank] run title @s title {"text":"You are LEON", "bold":true, "color":"white"}
 execute as @a[scores={intro_timer=1},tag=tank] run title @s actionbar {"text":"Your way stronger and faster You know whats right?", "color":"white"}
+playsound minecraft:entity.lightning_bolt.impact master @a ~ ~ ~ 1 0.1
 execute as @a[scores={intro_timer=1},tag=reviver] run title @s times 20 100 20
 execute as @a[scores={intro_timer=1},tag=reviver] run title @s title {"text":"You are ZACH", "bold":true, "color":"green"}
 execute as @a[scores={intro_timer=1},tag=reviver] run title @s actionbar {"text":"You can help them walk again", "color":"green"}
+playsound minecraft:entity.lightning_bolt.impact master @a ~ ~ ~ 1 0.1
 execute as @a[scores={intro_timer=1},tag=monster_detecter] run title @s times 20 100 20
 execute as @a[scores={intro_timer=1},tag=monster] run title @s title {"text":"You are MARIO", "bold":true, "color":"aqua"}
 execute as @a[scores={intro_timer=1},tag=monster_detecter] run title @s actionbar {"text":"You can sense unusual things near you", "color":"aqua"}
+playsound minecraft:entity.lightning_bolt.impact master @a ~ ~ ~ 1 0.1
 
 execute as @a[scores={intro_timer=1..}] run scoreboard players add @s intro_timer 1
 
@@ -215,9 +221,7 @@ execute as @a[scores={hacking_timer=0}] run bossbar set hacking_progress visible
 
 execute as @a[x=17,y=-2,z=24,dx=2,dy=2,dz=2] if score #total hacked_computers matches 4.. run title @s title {"text":"YOU ESCAPED YOUR FATE","color":"gold","bold":true}
 
-#execute if entity @a[team=monster] unless entity @a[team=survivors] run title @a[team=monster] title {"text":"YOU GOT YOUR REVENGE","color":"red","bold":true}
-
-execute if entity @a[team=monster] unless entity @a[team=survivors] run playsound minecraft:entity.wither.death master @a[team=monster]
+execute if entity @a[team=monster] unless entity @a[team=survivors]
 
 execute as @a[scores={intro_timer=1..}] run scoreboard players add @s intro_timer 1
 
@@ -253,13 +257,13 @@ execute as @a[scores={ability_cooldown=1..}] run scoreboard players remove @s ab
 execute as @a[scores={ability_cooldown2=1..}] run scoreboard players remove @s ability_cooldown2 1
 
 
-execute as @a[tag=is_monster,scores={ability_cooldown=241..300}] run title @s actionbar {"text":"[G] RADAR ACTIVE!","color":"red","bold":true}
+execute as @a[tag=is_monster,scores={ability_cooldown=241..300}] run title @s actionbar {"text":"[F] RADAR ACTIVE!","color":"red","bold":true}
 
 execute as @a[tag=is_monster,scores={ability_cooldown2=941..1000}] run title @s actionbar {"text":"[F] INVISIBILITY ACTIVE!","color":"red","bold":true}
 
-execute as @a[tag=is_monster,scores={ability_cooldown=0}] if items entity @s weapon *[custom_data~{ability:1}] run title @s actionbar {"text":"[G] RADAR ABILITY: READY","color":"green","bold":true}
+execute as @a[tag=is_monster,scores={ability_cooldown=0}] if items entity @s weapon *[custom_data~{ability:1}] run title @s actionbar {"text":"[F] RADAR ABILITY: READY","color":"green","bold":true}
 
-execute as @a[tag=is_monster,scores={ability_cooldown=1..240}] if items entity @s weapon *[custom_data~{ability:1}] run title @s actionbar ["",{"text":"[G] RADAR COOLDOWN: ","color":"gray"},{"score":{"name":"@s","objective":"ability_cooldown"},"color":"gold"}]
+execute as @a[tag=is_monster,scores={ability_cooldown=1..240}] if items entity @s weapon *[custom_data~{ability:1}] run title @s actionbar ["",{"text":"[F] RADAR COOLDOWN: ","color":"gray"},{"score":{"name":"@s","objective":"ability_cooldown"},"color":"gold"}]
 
 execute as @a[tag=is_monster,scores={ability_cooldown2=0}] if items entity @s weapon *[custom_data~{ability:2}] run title @s actionbar {"text":"[F] INVISIBILITY ABILITY: READY","color":"green","bold":true}
 
@@ -269,8 +273,27 @@ execute as @a[tag=is_monster,scores={ability_cooldown2=1..940}] if items entity 
 execute as @a[tag=is_monster,scores={ability_cooldown=..240,ability_cooldown2=..940}] unless items entity @s weapon *[custom_data~{ability:1}] unless items entity @s weapon *[custom_data~{ability:2}] run title @s actionbar ""
 
 
+# 1. Manually trigger your load function to reset all variables
+execute as @a[scores={start_game=1..}] run function hospital:load
 
+# 2. Reset the score IMMEDIATELY so it doesn't trigger again next tick
+scoreboard players set @a[scores={start_game=1..}] start_game 0
 
+execute if entity @a[tag=monster] unless entity @a[tag=survivors] run scoreboard players set @a end_game 2
 
+execute if entity @a[scores={end_game=1}]
 
+#killer
+execute as @a[tag=monster] if entity @a[scores={end_game=2}] run title @a[team=monster] title {"text":"YOU GOT YOUR REVENGE","color":"red","bold":true}
 
+#global settings
+execute if entity @a[scores={end_game=1..}] run clear @a
+execute if entity @a[scores={end_game=1..}] as @a run tag @s remove tank
+execute if entity @a[scores={end_game=1..}] as @a run tag @s remove reviver
+execute if entity @a[scores={end_game=1..}] as @a run tag @s remove monster_detecter
+execute if entity @a[scores={end_game=1..}] as @a run tag @s remove is_monster
+execute if entity @a[scores={end_game=1..}] as @a run tag @s remove downed
+execute if entity @a[scores={end_game=1..}] as @a run tag @s remove being_revived
+execute if entity @a[scores={end_game=1..}] as @a run tag @s remove placed_marker
+execute if entity @a[scores={end_game=1..}] run tp @a -52 -2 251
+scoreboard players set @a[scores={end_game=1..}] end_game 0

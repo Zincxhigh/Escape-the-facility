@@ -20,7 +20,8 @@ scoreboard objectives add ability_cooldown dummy
 scoreboard players set @s ability_cooldown 0
 scoreboard objectives add ability_cooldown2 dummy
 scoreboard players set @s ability_cooldown2 0
-
+scoreboard objectives add start_game trigger
+scoreboard objectives add end_game trigger
 
 setblock 16 -2 24 minecraft:bamboo_door[half=lower,open=false,facing=east,hinge=left] replace
 setblock 16 -1 24 minecraft:bamboo_door[half=upper,open=false,facing=east,hinge=left] replace
@@ -85,6 +86,7 @@ give @a[tag=is_monster] recovery_compass[custom_data={ability:1},item_name='"[Ra
 
 effect clear @a[team=monster] minecraft:invisibility 
 effect clear @a[team=monster] minecraft:glowing
+
 
 
 
