@@ -1,5 +1,9 @@
 
-# Escape Your Fate
+<p align="center">
+<img width="256" height="24" alt="pixel-text-Escape-Your-Fate" src="https://github.com/user-attachments/assets/6e8ab628-780b-43b4-b2ae-28d3068f85ca" />
+</p>
+
+
 A minigame created in minecraft with the use of mcfunction and not changing the actual minecraft code
 
 # Story
