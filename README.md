@@ -22,7 +22,7 @@ becuase of that kevin took his own life now at the same highschool he seeks to g
 * As you go on you will find weird notes regarding the same school of a different story will see what
 * that could be☠️
 
-## Role :Players:
+## Players Role
 
 ### Ability 
 * Mario = "He can detect the monster if he is near"
@@ -35,7 +35,7 @@ becuase of that kevin took his own life now at the same highschool he seeks to g
 * The trio = "can't kill the monster"
 * The trio = "Can be seen through walls by the monster"
 
-## Role :Monster:
+## Entities Role
 
 ### Ability
 * Kevin = "Has the ability to go invincible two times for 50 seconds be warry of your srroundings"
@@ -45,24 +45,16 @@ becuase of that kevin took his own life now at the same highschool he seeks to g
 * Kevin = "He can't come to the swears and certain computer places"
 * Kevin = "He can't see you in the swears"
 
-### Commends
-* /reload to start/restart
-
 # HOW TO INSTALL
 * install the whole folders and run 1.21.8
 * Put the :resourcepack-things: and :conputer: in the resource pack folder
 * Put the world folder in the saves of 1.21.8
 * Then do /reload and everything will start
 
-# Recommended Mods
+# Recommended Tweaks
 * install Simple voice chat to make it more realistic
 * install essantial To play with friends
-
-# Important shaders
 * Spooklementary shader
-
-# Future 
-* I will be adding My own horror resource pack but rn this is only a prototype so be consdiderate
 
 # Credits
 RinFan for the map
